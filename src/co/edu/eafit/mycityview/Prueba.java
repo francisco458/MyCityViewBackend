@@ -5,5 +5,7 @@ public class Prueba {
 		System.out.println("Prueba");
 		
 		// Que pasara
+		
+		// Otra cosa
 	}
 }
