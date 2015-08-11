@@ -5,20 +5,5 @@ public class Prueba {
 		System.out.println("Prueba");
 
 		// conflictos
-		
-		// Que pasara
-		
-		// Otra cosa
-		
-		// No entiendo
-		// Que no entiende
-		// Hole
-		// hola hola 
-		
-		// siiiiiiiiiiiiiii
-		// oeoeoeo
-		
-		// jejejejej
-		// jajajajaj
 	}
 }
