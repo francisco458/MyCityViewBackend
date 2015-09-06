@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class MyDataAcces {
 
 	private String _usuario = "root";
-	private String _pwd = "";
+	private String _pwd = "root";
 	private static String _bd = "mysql";
 	static String _url = "jdbc:mysql://localhost/" + _bd;
 	private Connection conn = null;
