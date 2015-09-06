@@ -33,7 +33,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 
 	private AuthenticationManager authenticationManager;
 	private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
-	private final static String PASSPHRASE = "deismasintegracion";
+	private final static String PASSPHRASE = "encrip_mycityview";
 	private final static int MINUTOS_DIFERENCIA_AUTENTICACION = 10;
 
 //	@Autowired

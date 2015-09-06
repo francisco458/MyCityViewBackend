@@ -26,6 +26,7 @@ public class RutasRest {
 	public @ResponseBody RestResponse consultarRutas(@PathVariable String latitud, @PathVariable String longitud){
 		RestResponse response = new RestResponse();
 		response.setCode(CodigoEstadoComucacion.RESULTADO_EXITOSO);
+		response.setDescription("Prueba");
 		return response;
 	}
 	
