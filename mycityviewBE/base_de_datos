@@ -1,0 +1,44 @@
+Instalación MySql
+
+1. Descargar base de datos 
+	http://dev.mysql.com/downloads/file.php?id=458258
+	manual -(https://www.youtube.com/watch?v=O4xXzTIcnDE)
+
+2. Descomprimir el zip
+3. Crear la variable de entorno
+4. Abri cmd como administrador
+	4.1 ir a la ruta de instalación/bin
+	4.2 ejecutar mysqld --install
+	4.3 mysql -u root -p
+	use mysql;
+	update mysql.user set password = password('root') where user = 'root';
+	
+	create database mycityviewdb default character set utf8 default collate utf8_general_ci;
+	create user 'app_user'@'localhost' identified by 'mypass';
+	grant all on mycityviewdb.* to 'app_user'@'localhost';
+	flush privileges;
+	quit
+	
+	mysql -u app_user -p
+	use mycityviewdb;
+	
+MySql installer
+	https://dev.mysql.com/downloads/windows/installer/5.7.html
+	
+5. MySql Worbech (el instalador)
+	http://dev.mysql.com/downloads/file.php?id=457780
+	
+
+
+
+conector eclipse - (https://www.youtube.com/watch?v=FtCI3PIY4oE)
+
+
+-----------------------------------------------------------------
+CREATE TABLE mycityviewdb.t (c CHAR(20) CHARACTER SET utf8 COLLATE utf8_bin);
+insert into mycityviewdb.t (c) value ('a');
+insert into mycityviewdb.t (c) value ('b');
+select * from mycityviewdb.t;
+delete from mycityviewdb.t where c='b';
+
+drop table mycityviewdb.t;
