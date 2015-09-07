@@ -1,9 +1,8 @@
 package co.edu.eafit.mycityview.business;
 
-import java.util.List;
-
 import co.edu.eafit.mycityview.model.Location;
-import co.edu.eafit.mycityview.model.RutaDTO;
+
+import com.google.gson.JsonArray;
 
 public interface RutaBusiness {
 
@@ -13,6 +12,6 @@ public interface RutaBusiness {
 	 * @param location
 	 * @return
 	 */
-	List<RutaDTO> findRutaByLocation(Location location);
+	JsonArray findRutaByLocation(Location location);
 
 }

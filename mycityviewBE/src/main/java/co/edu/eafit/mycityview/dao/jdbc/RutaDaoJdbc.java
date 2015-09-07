@@ -1,8 +1,6 @@
 package co.edu.eafit.mycityview.dao.jdbc;
 
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import co.edu.eafit.mycityview.dao.MyDataAcces;
 import co.edu.eafit.mycityview.dao.RutaDao;
 import co.edu.eafit.mycityview.model.Location;
-import co.edu.eafit.mycityview.model.RutaDTO;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Repository
 public class RutaDaoJdbc implements RutaDao {
@@ -21,23 +21,20 @@ public class RutaDaoJdbc implements RutaDao {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * co.edu.eafit.mycityview.dao.RutaDao#findRuta(co.edu.eafit.mycityview.
-	 * model.Location)
+	 * @see co.edu.eafit.mycityview.dao.RutaDao#findRuta(co.edu.eafit.mycityview. model.Location)
 	 */
 	@Override
-	public List<RutaDTO> findRuta(Location location) throws Exception {
-		ArrayList<RutaDTO> listRutas = new ArrayList<RutaDTO>();
+	public JsonArray findRuta(Location location) throws Exception {
+		JsonArray jsonArray = new JsonArray();
+		JsonObject jsonObject = null;
 		ResultSet resultSet = myDataAcces.getQuery("select user, host from user");
 		if (resultSet != null) {
 			while (resultSet.next()) {
-				RutaDTO ruta = new RutaDTO();
-				ruta.setNombreRuta(resultSet.getString("user"));
-
-				listRutas.add(ruta);
+				jsonObject = new JsonObject();
+				jsonObject.addProperty("ruta", resultSet.getString("user") + " " + resultSet.getString("host"));
+				jsonArray.add(jsonObject);
 			}
 		}
-		return listRutas;
+		return jsonArray;
 	}
-	
 }
