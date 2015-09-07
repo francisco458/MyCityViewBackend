@@ -1,9 +1,8 @@
 package co.edu.eafit.mycityview.dao;
 
-import java.util.List;
-
 import co.edu.eafit.mycityview.model.Location;
-import co.edu.eafit.mycityview.model.RutaDTO;
+
+import com.google.gson.JsonArray;
 
 public interface RutaDao {
 
@@ -13,6 +12,5 @@ public interface RutaDao {
 	 * @return
 	 * @throws Exception
 	 */
-	List<RutaDTO> findRuta(Location location) throws Exception;
-
+	JsonArray findRuta(Location location) throws Exception;
 }

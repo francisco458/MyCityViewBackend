@@ -1,15 +1,13 @@
 package co.edu.eafit.mycityview.business.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.eafit.mycityview.business.RutaBusiness;
 import co.edu.eafit.mycityview.dao.RutaDao;
 import co.edu.eafit.mycityview.model.Location;
-import co.edu.eafit.mycityview.model.RutaDTO;
+
+import com.google.gson.JsonArray;
 
 @Service("RutaBusiness")
 public class RutaBusinessImpl implements RutaBusiness {
@@ -25,13 +23,13 @@ public class RutaBusinessImpl implements RutaBusiness {
 	 * .eafit.mycityview.model.Location)
 	 */
 	@Override
-	public List<RutaDTO> findRutaByLocation(Location location) {
-		List<RutaDTO> listRutas = new ArrayList<RutaDTO>();
+	public JsonArray findRutaByLocation(Location location) {
+		JsonArray jsonArray = null;
 		try {
-			listRutas = rutaDao.findRuta(location);
+			jsonArray = rutaDao.findRuta(location);
 		} catch (Exception e) {
 
 		}
-		return listRutas;
+		return jsonArray;
 	}
 }
