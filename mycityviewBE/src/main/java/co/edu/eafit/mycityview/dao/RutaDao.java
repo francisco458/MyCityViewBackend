@@ -13,5 +13,4 @@ public interface RutaDao {
 	 * @throws Exception
 	 */
 	JsonArray findRuta(Location location) throws Exception;
-
 }

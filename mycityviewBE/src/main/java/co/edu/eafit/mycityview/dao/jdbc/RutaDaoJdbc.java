@@ -37,5 +37,4 @@ public class RutaDaoJdbc implements RutaDao {
 		}
 		return jsonArray;
 	}
-
 }
