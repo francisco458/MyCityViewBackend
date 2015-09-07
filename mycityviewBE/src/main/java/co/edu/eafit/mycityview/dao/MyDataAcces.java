@@ -24,6 +24,7 @@ public class MyDataAcces {
 			}
 		} catch (SQLException ex) {
 			System.out.println("Hubo un problema al intentar conectarse a la base de datos" + _url);
+			System.out.println(ex.getMessage());
 		} catch (ClassNotFoundException ex) {
 			System.out.println(ex);
 		}
@@ -33,8 +34,10 @@ public class MyDataAcces {
 		Statement state = null;
 		ResultSet resultado = null;
 		try {
-			state = (Statement) conn.createStatement();
-			resultado = state.executeQuery(_query);
+			if (conn != null) {
+				state = (Statement) conn.createStatement();
+				resultado = state.executeQuery(_query);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 
@@ -45,8 +48,10 @@ public class MyDataAcces {
 	public void setQuery(String _query) {
 		Statement state = null;
 		try {
-			state = (Statement) conn.createStatement();
-			state.execute(_query);
+			if (conn != null) {
+				state = (Statement) conn.createStatement();
+				state.execute(_query);
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,9 +66,11 @@ public class MyDataAcces {
 		resultado = conexion.getQuery("select user, host from user");
 
 		try {
-			while (resultado.next()) {
-				nombres = resultado.getString("user");
-				System.out.println("nombre: " + nombres);
+			if (resultado != null) {
+				while (resultado.next()) {
+					nombres = resultado.getString("user");
+					System.out.println("nombre: " + nombres);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
