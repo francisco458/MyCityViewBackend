@@ -9,6 +9,7 @@ import java.sql.Statement;
 import org.springframework.stereotype.Repository;
 
 @Repository
+
 public class MyDataAcces {
 
 	private String _usuario = "root";
