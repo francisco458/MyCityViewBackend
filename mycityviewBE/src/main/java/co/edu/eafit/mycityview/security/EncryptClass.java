@@ -125,8 +125,8 @@ public class EncryptClass {
     }
     
     public static void main(String[] args) {
-		EncryptClass encrypt = new EncryptClass("deismasintegracion");
-		System.out.println(encrypt.encrypt("usuario.rest:ftd*+55qx:04-09-2015-16-48"));
+		EncryptClass encrypt = new EncryptClass("encrip_mycityview");
+		System.out.println(encrypt.encrypt("usuario.rest:ftd*+55qx:07-09-2015-09-36"));
 //		System.out.println(encrypt.decrypt("s3tCeruMSRG8j7eAEDp7FMQZfnCkPoHMga5NqiSS4KOV0Oo4KouBbTENl7jkamFwGo6Nj5kyGSo="));
 	}
 
