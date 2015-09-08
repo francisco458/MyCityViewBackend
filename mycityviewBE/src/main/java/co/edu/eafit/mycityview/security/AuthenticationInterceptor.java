@@ -31,7 +31,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 	private AuthenticationManager authenticationManager;
 	private static final Logger logger = LoggerFactory.getLogger(AuthenticationInterceptor.class);
 	private final static String PASSPHRASE = "encrip_mycityview";
-	private final static int MINUTOS_DIFERENCIA_AUTENTICACION = 2000;
+	private final static int MINUTOS_DIFERENCIA_AUTENTICACION = 2000000;
 
 	// @Autowired
 	// private SeguridadManager seguridadManager;
