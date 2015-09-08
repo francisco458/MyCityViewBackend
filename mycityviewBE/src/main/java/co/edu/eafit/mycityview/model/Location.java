@@ -2,18 +2,22 @@ package co.edu.eafit.mycityview.model;
 
 public class Location {
 
-	private float latitud;
-	private float longitud;
-	public float getLatitud() {
+	private double latitud;
+	private double longitud;
+
+	public double getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(float latitud) {
-		this.latitud = latitud;
-	}
-	public float getLongitud() {
+
+	public double getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(float longitud) {
+
+	public void setLatitud(double latitud) {
+		this.latitud = latitud;
+	}
+
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
 }

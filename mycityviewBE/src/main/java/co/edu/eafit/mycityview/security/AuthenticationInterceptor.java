@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,10 +17,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-
 import co.edu.eafit.mycityview.model.Constantes.FormatoFecha;
 import co.edu.eafit.mycityview.util.Util;
-
 
 /**
  * Interceptor que se encarga de validar el usuario y clave de servicio rest y sus roles<br>
@@ -36,8 +33,8 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 	private final static String PASSPHRASE = "encrip_mycityview";
 	private final static int MINUTOS_DIFERENCIA_AUTENTICACION = 2000;
 
-//	@Autowired
-//	private SeguridadManager seguridadManager;
+	// @Autowired
+	// private SeguridadManager seguridadManager;
 
 	/*
 	 * Decodifica la informacion de la autorizacion
@@ -61,6 +58,12 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			authList.add(new SimpleGrantedAuthority(role));
 		}
 		return authList;
+	}
+
+	private List<String> getRecursos() {
+		List<String> recursos = new ArrayList<String>();
+		recursos.add("ROLE_MYCITYVIEW_REST_C");
+		return recursos;
 	}
 
 	/**
@@ -91,12 +94,6 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 			((HttpServletResponse) response).getWriter().append(e.getMessage());
 		}
 		return false;
-	}
-
-	private List<String> getRecursos() {
-		List<String> recursos = new ArrayList<String>();
-		recursos.add("ROLE_MYCITYVIEW_REST_C");
-		return recursos;
 	}
 
 	public void setAuthenticationManager(AuthenticationManager authenticationManager) {
