@@ -37,23 +37,14 @@ public class RutasRest {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 
-		try {
-			Location location = new Location();
-			location.setLatitud(latitud);
-			location.setLongitud(latitud);
-			
-			JsonArray jsonArray = new JsonArray();
-			jsonArray = rutaBusiness.findRutaByLocation(location);
-			if(jsonArray.size() != 0){
-				responseEntity = new ResponseEntity<String>(jsonArray.toString(), responseHeaders, HttpStatus.OK);
-			}else{
-				responseEntity = new ResponseEntity<String>(null, responseHeaders, HttpStatus.NO_CONTENT);
-			}
-		} catch (Exception e) {
-			responseEntity = new ResponseEntity<String>(null, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
-			
-		}
+		Location location = new Location();
+		location.setLatitud(latitud);
+		location.setLongitud(latitud);
+		
+		JsonArray jsonArray = new JsonArray();
+		jsonArray = rutaBusiness.findRutaByLocation(location);
 
+		responseEntity = new ResponseEntity<String>(jsonArray.toString(), responseHeaders, HttpStatus.OK);
 		return responseEntity;
 	}
 
