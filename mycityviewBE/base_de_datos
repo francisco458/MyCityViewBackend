@@ -36,3 +36,13 @@ MySql installer (Instalar requisitos para workbench)
 
 
 conector eclipse - (https://www.youtube.com/watch?v=FtCI3PIY4oE)
+
+
+-----------------------------------------------------------------
+CREATE TABLE mycityviewdb.t (c CHAR(20) CHARACTER SET utf8 COLLATE utf8_bin);
+insert into mycityviewdb.t (c) value ('a');
+insert into mycityviewdb.t (c) value ('b');
+select * from mycityviewdb.t;
+delete from mycityviewdb.t where c='b';
+
+drop table mycityviewdb.t;
