@@ -21,6 +21,7 @@ import co.edu.eafit.mycityview.business.RutaBusiness;
 import co.edu.eafit.mycityview.model.Location;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("ruta")
@@ -43,7 +44,8 @@ public class RutasRest {
 			location.setLongitud(latitud);
 			
 			JsonArray jsonArray = new JsonArray();
-			jsonArray = rutaBusiness.findRutaByLocation(location);
+//			jsonArray = rutaBusiness.findRutaByLocation(location);
+			jsonArray = getJsonArrayExample();
 			if(jsonArray.size() != 0){
 				responseEntity = new ResponseEntity<String>(jsonArray.toString(), responseHeaders, HttpStatus.OK);
 			}else{
@@ -55,6 +57,28 @@ public class RutasRest {
 
 		return responseEntity;
 	}
+	
+	
+	private JsonArray getJsonArrayExample(){
+		JsonArray jsonArray = new JsonArray();
+		
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("nombre", "Circular sur 303");
+		jsonObject.addProperty("identificador", 1);
+		jsonArray.add(jsonObject);
+		
+		jsonObject = new JsonObject();
+		jsonObject.addProperty("nombre", "Coonatra 150");
+		jsonObject.addProperty("identificador", 2);
+		jsonArray.add(jsonObject);
+		
+		jsonObject = new JsonObject();
+		jsonObject.addProperty("nombre", "Prado-Medellin");
+		jsonObject.addProperty("identificador", 3);
+		jsonArray.add(jsonObject);
+		return jsonArray;
+	}
+	
 
 	@ExceptionHandler(AccessDeniedException.class)
 	protected @ResponseBody
