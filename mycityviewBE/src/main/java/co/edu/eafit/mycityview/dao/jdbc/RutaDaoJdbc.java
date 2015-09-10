@@ -45,7 +45,7 @@ public class RutaDaoJdbc implements RutaDao {
 		if (sqlFindRutasCercacas == null) {
 			sqlFindRutasCercacas = new StringBuilder();
 			sqlFindRutasCercacas.append("SELECT  ");
-			sqlFindRutasCercacas.append("    * ");
+			sqlFindRutasCercacas.append("    DISTINCT * ");
 			sqlFindRutasCercacas.append("FROM ");
 			sqlFindRutasCercacas.append("    (SELECT  ");
 			sqlFindRutasCercacas.append("        MYCITYVIEWDB.get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
