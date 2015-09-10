@@ -39,7 +39,7 @@ public class RutaDaoJdbc implements RutaDao {
 		JsonArray jsonArray = new JsonArray();
 		JsonObject jsonObject = null;
 		Connection conn = dataSource.getConnection();
-		String sql = "select * from mycityviewdb.maestroruta";
+		String sql = "select * from mycityviewdb.maestroruta limit 5";
 		PreparedStatement ps = conn.prepareStatement(sql);
 		ResultSet resultSet = ps.executeQuery();
 
@@ -76,8 +76,8 @@ public class RutaDaoJdbc implements RutaDao {
 			listaLocations = new ArrayList<Location>();
 			while (resultSet.next()) {
 				location = new Location();
-				location.setLatitud(resultSet.getLong("idRuta"));
-				location.setLongitud(resultSet.getLong("idRuta"));
+				location.setLatitud(resultSet.getDouble("LATITUD"));
+				location.setLongitud(resultSet.getDouble("LONGITUD"));
 
 				rutaDTO.setIdRuta(resultSet.getLong("idRuta"));
 				listaLocations.add(location);
