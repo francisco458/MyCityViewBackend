@@ -1,8 +1,5 @@
 package co.edu.eafit.mycityview.restservice;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,7 +23,6 @@ import co.edu.eafit.mycityview.model.Location;
 import co.edu.eafit.mycityview.model.RutaDTO;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("ruta")
@@ -35,6 +31,13 @@ public class RutasRest {
 	@Autowired
 	private RutaBusiness rutaBusiness;
 
+	/**
+	 * Realiza la consulta de las rutas cercanas al punto seleccionado
+	 * 
+	 * @param latitud
+	 * @param longitud
+	 * @return
+	 */
 	@RequestMapping(value = "/consultar", method = RequestMethod.GET)
 	@Secured("ROLE_MYCITYVIEW_REST_C")
 	public ResponseEntity<String> consultarRutas(@RequestParam(value = "latitud", required = true) double latitud,
@@ -47,13 +50,12 @@ public class RutasRest {
 			Location location = new Location();
 			location.setLatitud(latitud);
 			location.setLongitud(latitud);
-			
+
 			JsonArray jsonArray = new JsonArray();
-//			jsonArray = rutaBusiness.findRutaByLocation(location);
-			jsonArray = getJsonArrayExample();
-			if(jsonArray.size() != 0){
+			jsonArray = rutaBusiness.findRutaByLocation(location);
+			if (jsonArray.size() != 0) {
 				responseEntity = new ResponseEntity<String>(jsonArray.toString(), responseHeaders, HttpStatus.OK);
-			}else{
+			} else {
 				responseEntity = new ResponseEntity<String>(null, responseHeaders, HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e) {
@@ -62,19 +64,24 @@ public class RutasRest {
 
 		return responseEntity;
 	}
-	
-	
+
+	/**
+	 * Realiza la consulta de los puntos que conforman la ruta del identificador
+	 * 
+	 * @param identificador
+	 * @return
+	 */
 	@RequestMapping(value = "/{identificador}", method = RequestMethod.GET)
 	@Secured("ROLE_MYCITYVIEW_REST_C")
-	public ResponseEntity<RutaDTO> consultarRutaById(@PathVariable int identificador) {
+	public ResponseEntity<RutaDTO> consultarRutaById(@PathVariable long identificador) {
 		ResponseEntity<RutaDTO> responseEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.setContentType(MediaType.APPLICATION_JSON);
 		try {
-			RutaDTO ruta = getRutaEjemplo();
-			if(ruta != null){
+			RutaDTO ruta = rutaBusiness.findRutaById(identificador);
+			if (ruta != null) {
 				responseEntity = new ResponseEntity<RutaDTO>(ruta, responseHeaders, HttpStatus.OK);
-			}else{
+			} else {
 				responseEntity = new ResponseEntity<RutaDTO>(null, responseHeaders, HttpStatus.NO_CONTENT);
 			}
 		} catch (Exception e) {
@@ -82,53 +89,6 @@ public class RutasRest {
 		}
 		return responseEntity;
 	}
-	
-	
-	private RutaDTO getRutaEjemplo() {
-		RutaDTO ruta = new RutaDTO();
-		ruta.setIdRuta(1);
-		ruta.setNombreRuta("Circular sur 303");
-		List<Location> lista = new ArrayList<Location>();
-		
-		Location loc = new Location();
-		loc.setLatitud(6.1569809);
-		loc.setLongitud(-75.6038274);
-		lista.add(loc);
-		
-		loc = new Location();
-		loc.setLatitud(6.160111199999999);
-		loc.setLongitud(-75.6021118);
-		lista.add(loc);
-		
-		loc = new Location();
-		loc.setLatitud(6.1580352);
-		loc.setLongitud(-75.6043071);
-		lista.add(loc);
-		ruta.setListLocation(lista);
-		return ruta;
-	}
-
-
-	private JsonArray getJsonArrayExample(){
-		JsonArray jsonArray = new JsonArray();
-		
-		JsonObject jsonObject = new JsonObject();
-		jsonObject.addProperty("nombreRuta", "Circular sur 303");
-		jsonObject.addProperty("idRuta", 1);
-		jsonArray.add(jsonObject);
-		
-		jsonObject = new JsonObject();
-		jsonObject.addProperty("nombreRuta", "Coonatra 150");
-		jsonObject.addProperty("idRuta", 2);
-		jsonArray.add(jsonObject);
-		
-		jsonObject = new JsonObject();
-		jsonObject.addProperty("nombreRuta", "Prado-Medellin");
-		jsonObject.addProperty("idRuta", 3);
-		jsonArray.add(jsonObject);
-		return jsonArray;
-	}
-	
 
 	@ExceptionHandler(AccessDeniedException.class)
 	protected @ResponseBody

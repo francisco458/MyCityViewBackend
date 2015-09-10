@@ -1,0 +1,33 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       		http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/util
+            http://www.springframework.org/schema/util/spring-util">
+
+
+	<!-- Contenedor de propiedades -->
+	<!-- <context:property-placeholder location="file:/opt/fotomultas/qxmovilidad.properties" /> -->
+
+	<!-- <util:map id="dbProps"> -->
+	<!-- <entry key="db.driver" value="com.mysql.jdbc.Driver" /> -->
+	<!-- <entry key="db.jdbcurl" value="jdbc:mysql://localhost/world" /> -->
+	<!-- <entry key="db.username" value="myuser" /> -->
+	<!-- <entry key="db.password" value="mypass" /> -->
+	<!-- </util:map> -->
+
+	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<beans:property name="url" value="jdbc:mysql://localhost/mycityviewdb" />
+		<beans:property name="username" value="app_user" />
+		<beans:property name="password" value="mypass" />
+	</beans:bean>
+
+
+	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+
+</beans:beans>

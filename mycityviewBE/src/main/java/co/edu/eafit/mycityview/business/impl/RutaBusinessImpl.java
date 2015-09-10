@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import co.edu.eafit.mycityview.business.RutaBusiness;
 import co.edu.eafit.mycityview.dao.RutaDao;
 import co.edu.eafit.mycityview.model.Location;
+import co.edu.eafit.mycityview.model.RutaDTO;
 
 import com.google.gson.JsonArray;
 
@@ -18,9 +19,23 @@ public class RutaBusinessImpl implements RutaBusiness {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * co.edu.eafit.mycityview.business.RutaBusiness#findRutaByLocation(co.edu
-	 * .eafit.mycityview.model.Location)
+	 * @see co.edu.eafit.mycityview.business.RutaBusiness#findRutaById(java.lang.Long)
+	 */
+	@Override
+	public RutaDTO findRutaById(Long identificadorRuta) {
+		RutaDTO rutaDTO = null;
+		try {
+			rutaDTO = rutaDao.findRutaById(identificadorRuta);
+		} catch (Exception e) {
+
+		}
+		return rutaDTO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see co.edu.eafit.mycityview.business.RutaBusiness#findRutaByLocation(co.edu .eafit.mycityview.model.Location)
 	 */
 	@Override
 	public JsonArray findRutaByLocation(Location location) {

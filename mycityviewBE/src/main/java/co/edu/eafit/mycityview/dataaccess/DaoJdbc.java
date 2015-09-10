@@ -2,6 +2,7 @@ package co.edu.eafit.mycityview.dataaccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,23 +12,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class DaoJdbc implements Dao {
 
-	private String _usuario = "root";
-	private String _pwd = "root";
-	private static String _bd = "mysql";
+	private String _usuario = "app_user";
+	private String _pwd = "mypass";
+	private static String _bd = "mycityviewdb";
 	static String _url = "jdbc:mysql://localhost/" + _bd;
-	
+
 	public static void main(String[] args) {
 		DaoJdbc conexion = new DaoJdbc();
 		ResultSet resultado;
-		String nombres;
+		String latitud;
+		String longitud;
 
-		resultado = conexion.getQuery("select user, host from user");
+		// resultado = conexion.getQuery("select user, host from user");
+		resultado = conexion.getQuery("select * from mycityviewdb.coordenada where idruta = ? order by IDCOORDENADA", 159l);
 
 		try {
 			if (resultado != null) {
+				int index = 1;
 				while (resultado.next()) {
-					nombres = resultado.getString("user");
-					System.out.println("nombre: " + nombres);
+					latitud = resultado.getString("latitud");
+					longitud = resultado.getString("longitud");
+
+					System.out.println(index++ + "Coordenadas: " + latitud + ", " + longitud);
 				}
 			}
 		} catch (SQLException e) {
@@ -41,7 +47,7 @@ public class DaoJdbc implements Dao {
 
 		try {
 			Class.forName("com.mysql.jdbc.Connection");
-			conn = (Connection) DriverManager.getConnection(_url, _usuario, _pwd);
+			conn = DriverManager.getConnection(_url, _usuario, _pwd);
 			if (conn != null) {
 				System.out.println("Conexion a base de datos " + _url + " . . . Ok");
 			}
@@ -55,6 +61,7 @@ public class DaoJdbc implements Dao {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see co.edu.eafit.mycityview.dataaccess.Dao#getQuery(java.lang.String)
 	 */
 	@Override
@@ -72,9 +79,25 @@ public class DaoJdbc implements Dao {
 		}
 		return resultado;
 	}
+	public ResultSet getQuery(String sql, Long va) {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultado = null;
+		try {
+			if (conn != null) {
+				preparedStatement = conn.prepareStatement(sql);
+				preparedStatement.setLong(1, va);
+				resultado = preparedStatement.executeQuery();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		return resultado;
+	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see co.edu.eafit.mycityview.dataaccess.Dao#setQuery(java.lang.String)
 	 */
 	@Override
