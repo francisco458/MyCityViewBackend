@@ -12,8 +12,7 @@ BEGIN
 		RETURN null;
 	ELSE 
 		RETURN idruta;
-    END IF;
-    
+    END IF;    
 END$$
 
 DELIMITER ;
