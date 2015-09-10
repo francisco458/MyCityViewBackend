@@ -29,6 +29,8 @@ public class RutaDaoJdbc implements RutaDao {
 	@Qualifier("dataSource")
 	private DataSource dataSource;
 
+	private StringBuilder sqlFindRutasCercacas = null;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -39,8 +41,23 @@ public class RutaDaoJdbc implements RutaDao {
 		JsonArray jsonArray = new JsonArray();
 		JsonObject jsonObject = null;
 		Connection conn = dataSource.getConnection();
-		String sql = "select * from mycityviewdb.maestroruta limit 5";
-		PreparedStatement ps = conn.prepareStatement(sql);
+
+		if (sqlFindRutasCercacas == null) {
+			sqlFindRutasCercacas = new StringBuilder();
+			sqlFindRutasCercacas.append("SELECT  ");
+			sqlFindRutasCercacas.append("    * ");
+			sqlFindRutasCercacas.append("FROM ");
+			sqlFindRutasCercacas.append("    (SELECT  ");
+			sqlFindRutasCercacas.append("        MYCITYVIEWDB.get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
+			sqlFindRutasCercacas.append("    FROM ");
+			sqlFindRutasCercacas.append("        MYCITYVIEWDB.coordenada co) rutas ");
+			sqlFindRutasCercacas.append("        INNER JOIN ");
+			sqlFindRutasCercacas.append("    mycityviewdb.maestroruta ma ON ma.IDRUTA = rutas.IDRUTA ");
+		}
+		PreparedStatement ps = conn.prepareStatement(sqlFindRutasCercacas.toString());
+		int index = 1;
+		ps.setDouble(index++, location.getLatitud());
+		ps.setDouble(index++, location.getLongitud());
 		ResultSet resultSet = ps.executeQuery();
 
 		if (resultSet != null) {

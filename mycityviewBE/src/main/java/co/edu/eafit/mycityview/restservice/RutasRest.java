@@ -49,7 +49,7 @@ public class RutasRest {
 		try {
 			Location location = new Location();
 			location.setLatitud(latitud);
-			location.setLongitud(latitud);
+			location.setLongitud(longitud);
 
 			JsonArray jsonArray = new JsonArray();
 			jsonArray = rutaBusiness.findRutaByLocation(location);
