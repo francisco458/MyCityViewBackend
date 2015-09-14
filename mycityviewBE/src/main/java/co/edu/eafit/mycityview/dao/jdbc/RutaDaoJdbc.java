@@ -51,11 +51,11 @@ public class RutaDaoJdbc implements RutaDao {
 				sqlFindRutasCercacas.append("    DISTINCT * ");
 				sqlFindRutasCercacas.append("FROM ");
 				sqlFindRutasCercacas.append("    (SELECT  ");
-				sqlFindRutasCercacas.append("        MYCITYVIEWDB.get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
+				sqlFindRutasCercacas.append("        get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
 				sqlFindRutasCercacas.append("    FROM ");
-				sqlFindRutasCercacas.append("        MYCITYVIEWDB.coordenada co) rutas ");
+				sqlFindRutasCercacas.append("        coordenada co) rutas ");
 				sqlFindRutasCercacas.append("        INNER JOIN ");
-				sqlFindRutasCercacas.append("    mycityviewdb.maestroruta ma ON ma.IDRUTA = rutas.IDRUTA ");
+				sqlFindRutasCercacas.append("    maestroruta ma ON ma.IDRUTA = rutas.IDRUTA ");
 			}
 			ps = conn.prepareStatement(sqlFindRutasCercacas.toString());
 			int index = 1;
@@ -103,7 +103,7 @@ public class RutaDaoJdbc implements RutaDao {
 
 		try {
 			Connection conn = dataSource.getConnection();
-			String sql = "select IDCOORDENADA, IDRUTA, LONGITUD, LATITUD, PRIMERPUNTO, ULTIMOPUNTO from mycityviewdb.coordenada where idruta = ? order by IDCOORDENADA";
+			String sql = "select IDCOORDENADA, IDRUTA, LONGITUD, LATITUD, PRIMERPUNTO, ULTIMOPUNTO from coordenada where idruta = ? order by IDCOORDENADA";
 			ps = conn.prepareStatement(sql);
 			ps.setLong(1, identificadorRuta);
 			resultSet = ps.executeQuery();
