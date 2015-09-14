@@ -13,14 +13,15 @@ public interface RutaBusiness {
 	 * @param identificadorRuta
 	 * @return
 	 */
-	RutaDTO findRutaById(Long identificadorRuta);
+	RutaDTO findRutaById(Long identificadorRuta) throws Exception;
 
 	/**
 	 * Consulta las rutas que tienen un punto cercano con el location
 	 * 
 	 * @param location
 	 * @return
+	 * @throws Exception
 	 */
-	JsonArray findRutaByLocation(Location location);
+	JsonArray findRutaByLocation(Location location) throws Exception;
 
 }

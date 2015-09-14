@@ -22,13 +22,9 @@ public class RutaBusinessImpl implements RutaBusiness {
 	 * @see co.edu.eafit.mycityview.business.RutaBusiness#findRutaById(java.lang.Long)
 	 */
 	@Override
-	public RutaDTO findRutaById(Long identificadorRuta) {
+	public RutaDTO findRutaById(Long identificadorRuta) throws Exception {
 		RutaDTO rutaDTO = null;
-		try {
-			rutaDTO = rutaDao.findRutaById(identificadorRuta);
-		} catch (Exception e) {
-
-		}
+		rutaDTO = rutaDao.findRutaById(identificadorRuta);
 		return rutaDTO;
 	}
 
@@ -38,13 +34,9 @@ public class RutaBusinessImpl implements RutaBusiness {
 	 * @see co.edu.eafit.mycityview.business.RutaBusiness#findRutaByLocation(co.edu .eafit.mycityview.model.Location)
 	 */
 	@Override
-	public JsonArray findRutaByLocation(Location location) {
+	public JsonArray findRutaByLocation(Location location) throws Exception {
 		JsonArray jsonArray = null;
-		try {
-			jsonArray = rutaDao.findRuta(location);
-		} catch (Exception e) {
-
-		}
+		jsonArray = rutaDao.findRuta(location);
 		return jsonArray;
 	}
 }

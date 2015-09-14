@@ -40,32 +40,49 @@ public class RutaDaoJdbc implements RutaDao {
 	public JsonArray findRuta(Location location) throws Exception {
 		JsonArray jsonArray = new JsonArray();
 		JsonObject jsonObject = null;
-		Connection conn = dataSource.getConnection();
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try {
+			Connection conn = dataSource.getConnection();
 
-		if (sqlFindRutasCercacas == null) {
-			sqlFindRutasCercacas = new StringBuilder();
-			sqlFindRutasCercacas.append("SELECT  ");
-			sqlFindRutasCercacas.append("    DISTINCT * ");
-			sqlFindRutasCercacas.append("FROM ");
-			sqlFindRutasCercacas.append("    (SELECT  ");
-			sqlFindRutasCercacas.append("        MYCITYVIEWDB.get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
-			sqlFindRutasCercacas.append("    FROM ");
-			sqlFindRutasCercacas.append("        MYCITYVIEWDB.coordenada co) rutas ");
-			sqlFindRutasCercacas.append("        INNER JOIN ");
-			sqlFindRutasCercacas.append("    mycityviewdb.maestroruta ma ON ma.IDRUTA = rutas.IDRUTA ");
-		}
-		PreparedStatement ps = conn.prepareStatement(sqlFindRutasCercacas.toString());
-		int index = 1;
-		ps.setDouble(index++, location.getLatitud());
-		ps.setDouble(index++, location.getLongitud());
-		ResultSet resultSet = ps.executeQuery();
+			if (sqlFindRutasCercacas == null) {
+				sqlFindRutasCercacas = new StringBuilder();
+				sqlFindRutasCercacas.append("SELECT  ");
+				sqlFindRutasCercacas.append("    DISTINCT * ");
+				sqlFindRutasCercacas.append("FROM ");
+				sqlFindRutasCercacas.append("    (SELECT  ");
+				sqlFindRutasCercacas.append("        MYCITYVIEWDB.get_route_near(co.LATITUD, co.LONGITUD, ?, ?, co.idruta) idruta ");
+				sqlFindRutasCercacas.append("    FROM ");
+				sqlFindRutasCercacas.append("        MYCITYVIEWDB.coordenada co) rutas ");
+				sqlFindRutasCercacas.append("        INNER JOIN ");
+				sqlFindRutasCercacas.append("    mycityviewdb.maestroruta ma ON ma.IDRUTA = rutas.IDRUTA ");
+			}
+			ps = conn.prepareStatement(sqlFindRutasCercacas.toString());
+			int index = 1;
+			ps.setDouble(index++, location.getLatitud());
+			ps.setDouble(index++, location.getLongitud());
+			resultSet = ps.executeQuery();
 
-		if (resultSet != null) {
-			while (resultSet.next()) {
-				jsonObject = new JsonObject();
-				jsonObject.addProperty("nombreRuta", resultSet.getString("descripcion"));
-				jsonObject.addProperty("idRuta", resultSet.getString("idRuta"));
-				jsonArray.add(jsonObject);
+			if (resultSet != null) {
+				while (resultSet.next()) {
+					jsonObject = new JsonObject();
+					jsonObject.addProperty("nombreRuta", resultSet.getString("descripcion"));
+					jsonObject.addProperty("idRuta", resultSet.getString("idRuta"));
+					jsonArray.add(jsonObject);
+				}
+			}
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception e) {
+				}
+			}
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (Exception e) {
+				}
 			}
 		}
 		return jsonArray;
@@ -81,25 +98,42 @@ public class RutaDaoJdbc implements RutaDao {
 		RutaDTO rutaDTO = null;
 		List<Location> listaLocations = null;
 		Location location = null;
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
 
-		Connection conn = dataSource.getConnection();
-		String sql = "select IDCOORDENADA, IDRUTA, LONGITUD, LATITUD, PRIMERPUNTO, ULTIMOPUNTO from mycityviewdb.coordenada where idruta = ? order by IDCOORDENADA";
-		PreparedStatement ps = conn.prepareStatement(sql);
-		ps.setLong(1, identificadorRuta);
-		ResultSet resultSet = ps.executeQuery();
+		try {
+			Connection conn = dataSource.getConnection();
+			String sql = "select IDCOORDENADA, IDRUTA, LONGITUD, LATITUD, PRIMERPUNTO, ULTIMOPUNTO from mycityviewdb.coordenada where idruta = ? order by IDCOORDENADA";
+			ps = conn.prepareStatement(sql);
+			ps.setLong(1, identificadorRuta);
+			resultSet = ps.executeQuery();
 
-		if (resultSet != null) {
-			rutaDTO = new RutaDTO();
-			listaLocations = new ArrayList<Location>();
-			while (resultSet.next()) {
-				location = new Location();
-				location.setLatitud(resultSet.getDouble("LATITUD"));
-				location.setLongitud(resultSet.getDouble("LONGITUD"));
+			if (resultSet != null) {
+				rutaDTO = new RutaDTO();
+				listaLocations = new ArrayList<Location>();
+				while (resultSet.next()) {
+					location = new Location();
+					location.setLatitud(resultSet.getDouble("LATITUD"));
+					location.setLongitud(resultSet.getDouble("LONGITUD"));
 
-				rutaDTO.setIdRuta(resultSet.getLong("idRuta"));
-				listaLocations.add(location);
+					rutaDTO.setIdRuta(resultSet.getLong("idRuta"));
+					listaLocations.add(location);
+				}
+				rutaDTO.setListLocation(listaLocations);
 			}
-			rutaDTO.setListLocation(listaLocations);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception e) {
+				}
+			}
+			if (resultSet != null) {
+				try {
+					resultSet.close();
+				} catch (Exception e) {
+				}
+			}
 		}
 		return rutaDTO;
 	}

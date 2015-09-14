@@ -3,6 +3,8 @@ package co.edu.eafit.mycityview.restservice;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,8 @@ import com.google.gson.JsonArray;
 @Controller
 @RequestMapping("ruta")
 public class RutasRest {
+
+	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Autowired
 	private RutaBusiness rutaBusiness;
@@ -60,6 +64,7 @@ public class RutasRest {
 			}
 		} catch (Exception e) {
 			responseEntity = new ResponseEntity<String>(null, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error(e.getMessage(), e);
 		}
 
 		return responseEntity;
@@ -86,6 +91,7 @@ public class RutasRest {
 			}
 		} catch (Exception e) {
 			responseEntity = new ResponseEntity<RutaDTO>(null, responseHeaders, HttpStatus.INTERNAL_SERVER_ERROR);
+			logger.error(e.getMessage(), e);
 		}
 		return responseEntity;
 	}
