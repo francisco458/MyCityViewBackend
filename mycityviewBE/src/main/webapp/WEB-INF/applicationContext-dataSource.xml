@@ -20,7 +20,9 @@
 
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<beans:property name="url" value="jdbc:mysql://localhost/mycityviewdb" />
+		<!-- <beans:property name="url" value="jdbc:mysql://localhost/mycityviewdb" /> -->
+		<!-- <beans:property name="url" value="jdbc:mysql://${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}/${OPENSHIFT_APP_NAME}" /> -->
+		<beans:property name="url" value="jdbc:mysql://127.3.71.130:3306/jbossews" />
 		<beans:property name="username" value="app_user" />
 		<beans:property name="password" value="mypass" />
 	</beans:bean>
