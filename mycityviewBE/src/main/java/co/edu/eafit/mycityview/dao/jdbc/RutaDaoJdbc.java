@@ -66,7 +66,7 @@ public class RutaDaoJdbc implements RutaDao {
 			if (resultSet != null) {
 				while (resultSet.next()) {
 					jsonObject = new JsonObject();
-					jsonObject.addProperty("nombreRuta", resultSet.getString("descripcion"));
+					jsonObject.addProperty("nombreRuta", resultSet.getString("RUTAOT") + "-" + resultSet.getString("descripcion"));
 					jsonObject.addProperty("idRuta", resultSet.getString("idRuta"));
 					jsonArray.add(jsonObject);
 				}
